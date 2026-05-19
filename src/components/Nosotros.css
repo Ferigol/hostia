@@ -1,0 +1,136 @@
+.nosotros {
+  background: var(--black);
+  padding: 100px 0 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Blobs de fondo ── */
+.nosotros__blobs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+}
+
+.nosotros__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  mix-blend-mode: screen;
+}
+
+.nosotros__blob--1 {
+  width: 50%;
+  height: 60%;
+  top: -10%;
+  right: -5%;
+  background: radial-gradient(circle, rgba(80, 15, 245, 0.28) 0%, transparent 70%);
+  animation: nosotrosBlob1 20s ease-in-out infinite;
+}
+
+.nosotros__blob--2 {
+  width: 45%;
+  height: 50%;
+  bottom: -10%;
+  left: -5%;
+  background: radial-gradient(circle, rgba(248, 105, 67, 0.22) 0%, transparent 70%);
+  animation: nosotrosBlob2 25s ease-in-out infinite;
+}
+
+@keyframes nosotrosBlob1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(-40px, 60px) scale(1.1); }
+}
+
+@keyframes nosotrosBlob2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(50px, -50px) scale(0.9); }
+}
+
+/* ── Layout ── */
+.nosotros__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.nosotros__header {
+  margin-bottom: 64px;
+}
+
+.nosotros__label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--white-50);
+  margin-bottom: 16px;
+}
+
+.nosotros__title {
+  font-size: clamp(36px, 4.5vw, 68px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--white);
+}
+
+.nosotros__carousel {
+  display: flex;
+  justify-content: flex-start;
+}
+
+@media (min-width: 769px) {
+  .nosotros__carousel {
+    justify-content: center;
+  }
+}
+
+/* ── Scroll indicator hacia Contacto ── */
+.nosotros__scroll {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 48px;
+  margin-top: -24px;
+}
+
+.nosotros__scroll-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+.nosotros__scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.5));
+  animation: nosotrosScrollPulse 2.4s ease-in-out infinite;
+}
+
+.nosotros__scroll-head {
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  transform: rotate(45deg);
+  margin-top: -3px;
+  animation: nosotrosScrollPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes nosotrosScrollPulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .nosotros { padding: 60px 0 80px; }
+  .nosotros__header { margin-bottom: 40px; }
+  .nosotros__carousel { justify-content: center; }
+}

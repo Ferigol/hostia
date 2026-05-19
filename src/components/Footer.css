@@ -1,0 +1,251 @@
+.footer {
+  position: relative;
+  background: rgba(15, 15, 17, 0.10);
+  border-radius: 24px;
+  overflow: hidden;
+  margin: 0 32px 32px;
+}
+
+/* Background gradient */
+.footer__gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(125% 125% at 50% 10%, rgba(15,15,17,0.4) 50%, rgba(80,15,245,0.6) 100%);
+  pointer-events: none;
+}
+
+.footer__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 56px 56px 0;
+}
+
+/* 4-column grid */
+.footer__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 48px 64px;
+  padding-bottom: 48px;
+}
+
+/* Brand column */
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.footer__logo {
+  height: 21px;
+  width: auto;
+}
+
+.footer__brand-desc {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+/* Email link */
+.footer__email-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--white);
+  text-decoration: none;
+  white-space: nowrap;
+  margin-top: 25px;
+}
+
+.footer__email-arrow {
+  font-size: 16px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.footer__email-text {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-color: rgba(255, 255, 255, 0.4);
+  transition: text-decoration-color 0.2s ease;
+}
+
+.footer__email-link:hover .footer__email-text {
+  text-decoration-color: var(--white);
+}
+
+/* Link columns */
+.footer__col-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+
+.footer__links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer__link {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--white);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.footer__link::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 50%;
+  transform: translateY(-50%) scaleX(0);
+  width: 10px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: transform 0.2s ease;
+  transform-origin: right center;
+}
+
+.footer__link:hover {
+  color: var(--white-80);
+}
+
+.footer__link:hover::before {
+  transform: translateY(-50%) scaleX(1);
+}
+
+.footer__link--location {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 300;
+}
+
+.footer__link--location::before {
+  display: none;
+}
+
+/* Contact column */
+.footer__contact-col { }
+
+.footer__contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer__contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Divider */
+.footer__divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0;
+}
+
+/* Bottom bar */
+.footer__bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0 32px;
+}
+
+.footer__socials {
+  display: flex;
+  gap: 24px;
+}
+
+.footer__social-icon {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.2s ease;
+}
+
+.footer__social-icon:hover {
+  color: var(--white);
+}
+
+.footer__copy {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.02em;
+}
+
+/* Big hover text */
+.footer__hover-text {
+  display: flex;
+  height: 30rem;
+  margin-top: -13rem;
+  margin-bottom: -9rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .footer__brand { grid-column: span 2; }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    margin: 0 16px 16px;
+    border-radius: 16px;
+  }
+
+  .footer__inner {
+    padding: 40px 24px 0;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer__brand { grid-column: span 1; }
+
+  .footer__bottom {
+    flex-direction: column-reverse;
+    gap: 16px;
+    align-items: flex-start;
+    padding-bottom: 24px;
+  }
+
+  .footer__hover-text {
+    display: none;
+  }
+}

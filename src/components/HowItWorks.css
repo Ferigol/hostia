@@ -1,0 +1,138 @@
+.how {
+  background: var(--black);
+  padding: 60px 0 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Blobs animados ── */
+.how__blobs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+}
+
+.how__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.how__blob--1 {
+  width: 55%;
+  height: 55%;
+  top: 0%;
+  left: -10%;
+  background: radial-gradient(circle at center, rgba(248, 105, 67, 0.37) 0%, transparent 70%);
+  animation: howBlob1 18s ease-in-out infinite;
+}
+
+.how__blob--2 {
+  width: 60%;
+  height: 60%;
+  top: 20%;
+  right: -15%;
+  background: radial-gradient(circle at center, rgba(80, 15, 245, 0.40) 0%, transparent 70%);
+  animation: howBlob2 22s ease-in-out infinite;
+}
+
+.how__blob--3 {
+  width: 45%;
+  height: 45%;
+  bottom: 5%;
+  left: 25%;
+  background: radial-gradient(circle at center, rgba(248, 105, 67, 0.30) 0%, transparent 70%);
+  animation: howBlob3 16s ease-in-out infinite;
+}
+
+@keyframes howBlob1 {
+  0%, 100% { transform: translate(0px,   0px)   scale(1);    }
+  33%       { transform: translate(60px,  -80px) scale(1.12); }
+  66%       { transform: translate(-40px, 50px)  scale(0.92); }
+}
+
+@keyframes howBlob2 {
+  0%, 100% { transform: translate(0px,   0px)   scale(1);    }
+  33%       { transform: translate(-70px, 50px)  scale(0.9);  }
+  66%       { transform: translate(40px,  -60px) scale(1.1);  }
+}
+
+@keyframes howBlob3 {
+  0%, 100% { transform: translate(0px,  0px)    scale(1);    }
+  50%       { transform: translate(-50px, -70px) scale(1.08); }
+}
+
+.how__inner {
+  position: relative;
+}
+
+/* ── Cada paso ── */
+.how-step {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 220px;
+}
+
+.how-step:last-child { margin-bottom: 0; }
+
+.how-step--right { /* número izq, contenido dcha */ }
+.how-step--left  { padding-top: 100px; /* offset visual hacia abajo */ }
+
+/* ── Número ── */
+.how-step__num {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.60);
+  flex-shrink: 0;
+}
+
+/* ── Contenido ── */
+.how-step__content {
+  max-width: 620px;
+  text-align: left;
+}
+
+.how-step__title {
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 16px;
+  white-space: nowrap;
+}
+
+.how-step__desc {
+  font-size: clamp(14px, 1.2vw, 16px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.7;
+  max-width: 420px;
+  white-space: normal;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .how { padding: 40px 0 80px; }
+
+  .how-step {
+    flex-direction: column;
+    min-height: auto;
+    padding: 50px 0;
+    gap: 16px;
+  }
+
+  /* El número del paso izquierdo sube por encima del título en móvil */
+  .how-step--left .how-step__num { order: -1; }
+
+  .how-step__content { max-width: 100%; }
+  .how-step__title   { white-space: normal; font-size: clamp(22px, 6vw, 32px); }
+  .how-step__desc    { max-width: 100%; }
+}

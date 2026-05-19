@@ -1,0 +1,151 @@
+/* ── Hero background container (BackgroundGradientAnimation) ── */
+.hero-bg {
+  width: 100% !important;
+}
+
+/* Noise grain solo sobre el degradado */
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.75;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  background-repeat: repeat;
+}
+
+/* Fade inferior que disuelve el gradiente en negro sin corte */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 280px;
+  background: linear-gradient(to bottom, transparent 0%, #000 100%);
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* ── Content overlay ── */
+.hero-content-wrapper {
+  padding-top: var(--nav-height);
+  text-align: center;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Headline ── */
+.hero__headline {
+  font-size: clamp(44px, 5.5vw, 84px);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  max-width: 900px;
+  margin-top: -130px;
+  margin-bottom: 28px;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 50;              /* siempre encima de las imágenes arrastradas */
+}
+
+@keyframes img-fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Draggable images — absolutas, detrás del título ── */
+.hero__img-left {
+  position: absolute;
+  left: calc(50% - 400px);
+  top: calc(50% + 42px - 80px);
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  opacity: 0;
+  animation: img-fadein 1.2s ease-out 0.4s forwards;
+}
+
+.hero__img-right {
+  position: absolute;
+  right: calc(14% + 95px);
+  top: calc(50% + 58px - 185px);
+  transform: translateY(-50%);
+  z-index: 3;
+  opacity: 0;
+  animation: img-fadein 1.2s ease-out 0.7s forwards;
+}
+
+@media (max-width: 900px) {
+  .hero__img-left,
+  .hero__img-right { display: none; }
+}
+
+/* ── Pillars — pie del hero ── */
+.hero__pillars {
+  position: absolute;
+  bottom: 48px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 10;
+}
+
+.hero__pillar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero__pillar:first-child {
+  transform: translateX(150px);
+  align-items: flex-start;
+  text-align: left;
+}
+
+.hero__pillar--center {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.hero__pillar--right {
+  align-items: flex-start;
+  text-align: left;
+  transform: translateX(-150px);
+}
+
+.pillar__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+
+.pillar__sub {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--white-50);
+  letter-spacing: 0.02em;
+  margin-top: -10px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero__headline { letter-spacing: -0.02em; }
+
+  .hero__pillars {
+    padding: 0 24px;
+    gap: 0;
+    justify-content: space-between;
+  }
+  .hero__pillar:first-child { transform: none; }
+  .hero__pillar--right      { transform: none; }
+  .pillar__title { font-size: 14px; }
+  .pillar__sub   { font-size: 12px; }
+}
