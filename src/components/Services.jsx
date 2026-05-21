@@ -1,19 +1,162 @@
-import { useRef, useMemo } from 'react'
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import { useRef, useEffect, useState, useCallback, useMemo } from 'react'
+import { motion } from 'framer-motion'
 import { ContainerTextScroll } from './ui/ContainerTextScroll'
 import './Services.css'
 
-// Placeholder images — replace each src with your video:
-// <video src="/videos/landing.mp4" className="w-full h-full object-cover" muted autoPlay loop playsInline />
-const SERVICE_IMAGES = [
-  '/servicio-1.webp',
-  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1400&q=80',
-  '/servicio-2.webp',
+const SERVICE_MEDIA = [
+  { type: 'video', src: '/servicio-1.mp4' },
+  { type: 'video', src: '/servicio-2.mp4' },
+  { type: 'video', src: '/servicio-3.mp4' },
 ]
 
-export default function Services({ t }) {
-  const headerRef = useRef(null)
+// ── Video con crossfade seamless entre dos elementos ────────────────────────
+function ServiceVideo({ src, onPlay, onPause }) {
+  const wrapRef = useRef(null)
+  const aRef    = useRef(null)
+  const bRef    = useRef(null)
+  const s       = useRef({ showing: 'a', swapping: false, playing: false })
+  const [showing, setShowing] = useState('a')
 
+  useEffect(() => {
+    const wrap = wrapRef.current
+    const a    = aRef.current
+    const b    = bRef.current
+    if (!wrap || !a || !b) return
+
+    const CROSSFADE_AHEAD = 0.5
+
+    const crossfade = (cur, nxt) => {
+      if (s.current.swapping) return
+      s.current.swapping = true
+      nxt.currentTime = 0
+      nxt.play().catch(() => {})
+      const next = s.current.showing === 'a' ? 'b' : 'a'
+      s.current.showing = next
+      setShowing(next)
+      setTimeout(() => { cur.pause(); cur.currentTime = 0; s.current.swapping = false }, 350)
+    }
+
+    const onTimeUpdate = () => {
+      if (s.current.swapping) return
+      const cur = s.current.showing === 'a' ? a : b
+      const nxt = s.current.showing === 'a' ? b : a
+      if (cur.duration && cur.currentTime >= cur.duration - CROSSFADE_AHEAD) crossfade(cur, nxt)
+    }
+
+    a.addEventListener('timeupdate', onTimeUpdate)
+    b.addEventListener('timeupdate', onTimeUpdate)
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        if (!s.current.playing) { s.current.playing = true; onPlay?.() }
+        const cur = s.current.showing === 'a' ? a : b
+        cur.play().catch(() => {})
+      } else {
+        if (s.current.playing) { s.current.playing = false; onPause?.() }
+        a.pause(); b.pause()
+        a.currentTime = 0; b.currentTime = 0
+        s.current.showing = 'a'; s.current.swapping = false
+        setShowing('a')
+      }
+    }, { threshold: 0.5 })
+
+    observer.observe(wrap)
+
+    return () => {
+      a.removeEventListener('timeupdate', onTimeUpdate)
+      b.removeEventListener('timeupdate', onTimeUpdate)
+      observer.disconnect()
+    }
+  }, [onPlay, onPause])
+
+  const videoClass = 'w-full h-full object-cover'
+  const baseStyle  = { position: 'absolute', inset: 0, transition: 'opacity 0.35s ease' }
+
+  return (
+    <div ref={wrapRef} className="relative w-full h-full">
+      <video ref={aRef} src={src} className={videoClass}
+        style={{ ...baseStyle, opacity: showing === 'a' ? 0.4 : 0 }} muted playsInline />
+      <video ref={bRef} src={src} className={videoClass}
+        style={{ ...baseStyle, opacity: showing === 'b' ? 0.4 : 0 }} muted playsInline />
+    </div>
+  )
+}
+
+// ── Vignette esquina inferior derecha ───────────────────────────────────────
+const VIGNETTE_STYLE = {
+  position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 1,
+  borderRadius: 'inherit',
+  background: 'radial-gradient(circle at bottom right, rgba(0,0,0,0.97) 0%, transparent 28%)',
+}
+
+// ── Título sincronizado con el video ────────────────────────────────────────
+function VideoServiceTitle({ item, videoPlaying }) {
+  const [subtitleVisible, setSubtitleVisible] = useState(false)
+  const [bodyVisible,     setBodyVisible]     = useState(false)
+
+  const SUBTITLE_DELAY = 2000
+  const BODY_DELAY     = SUBTITLE_DELAY + 800 + 1000
+
+  useEffect(() => {
+    if (!videoPlaying) {
+      setSubtitleVisible(false)
+      setBodyVisible(false)
+      return
+    }
+    const t1 = setTimeout(() => setSubtitleVisible(true), SUBTITLE_DELAY)
+    const t2 = setTimeout(() => setBodyVisible(true),     BODY_DELAY)
+    return () => { clearTimeout(t1); clearTimeout(t2) }
+  }, [videoPlaying])
+
+  return (
+    <div className="relative w-full h-full text-center">
+      <div style={VIGNETTE_STYLE} aria-hidden="true" />
+
+      <div className="absolute top-[60px] inset-x-0 flex justify-center px-8 md:px-16" style={{ zIndex: 2 }}>
+        <h3 className="text-[clamp(10px,0.9vw,13px)] font-semibold text-white leading-tight tracking-[0.35em] uppercase">
+          {item.title}
+        </h3>
+      </div>
+
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-8 md:px-16" style={{ zIndex: 2 }}>
+        <motion.p
+          className="text-[clamp(20px,2.4vw,30px)] text-white"
+          style={{ fontWeight: 500, letterSpacing: '-0.025em', lineHeight: 1.1, fontFamily: 'Tomorrow, sans-serif', textTransform: 'uppercase' }}
+          initial={{ opacity: 0, y: 24 }}
+          animate={subtitleVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          {item.subtitle}
+        </motion.p>
+        <motion.p
+          className="max-w-3xl"
+          style={{ fontSize: 'clamp(16px, 1.4vw, 22px)', fontWeight: 400, lineHeight: 1.75, color: '#ffffff', fontFamily: 'Tomorrow, sans-serif' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={bodyVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          {item.body.split('||').map((line, i) => <span key={i} style={{ display: 'block' }}>{line}</span>)}
+        </motion.p>
+      </div>
+    </div>
+  )
+}
+
+// ── Contenedor de video (genérico para los 3) ───────────────────────────────
+function VideoServiceContainer({ item, src }) {
+  const [videoPlaying, setVideoPlaying] = useState(false)
+  const handlePlay  = useCallback(() => setVideoPlaying(true),  [])
+  const handlePause = useCallback(() => setVideoPlaying(false), [])
+
+  return (
+    <ContainerTextScroll titleComponent={<VideoServiceTitle item={item} videoPlaying={videoPlaying} />}>
+      <ServiceVideo src={src} onPlay={handlePlay} onPause={handlePause} />
+    </ContainerTextScroll>
+  )
+}
+
+// ── Componente principal ────────────────────────────────────────────────────
+export default function Services({ t }) {
   const stars = useMemo(() =>
     Array.from({ length: 80 }, (_, i) => ({
       id: i,
@@ -24,20 +167,6 @@ export default function Services({ t }) {
       delay:      Math.random() * 6,
     }))
   , [])
-
-  // Scroll-driven: el título aparece mientras mueves el scroll hacia él
-  const { scrollYProgress } = useScroll({
-    target: headerRef,
-    offset: ['start 90%', 'start 30%'],
-  })
-
-  const opacityRaw = useTransform(scrollYProgress, [0, 1], [0, 1])
-  const yRaw       = useTransform(scrollYProgress, [0, 1], [50, 0])
-  const blurRaw    = useTransform(scrollYProgress, [0, 1], [12, 0])
-
-  const opacity = useSpring(opacityRaw, { stiffness: 60, damping: 20 })
-  const y       = useSpring(yRaw,       { stiffness: 60, damping: 20 })
-  const filter  = useTransform(blurRaw, v => `blur(${v}px)`)
 
   return (
     <section className="services" id="servicios">
@@ -52,59 +181,9 @@ export default function Services({ t }) {
           />
         ))}
       </div>
-      <div className="services__inner section-inner">
 
-        {/* Título — aparece suavemente conforme mueves el scroll */}
-        <motion.div
-          ref={headerRef}
-          className="services__header"
-          style={{ opacity, y, filter }}
-        >
-          <h2 className="services__title text-center">
-            {t.services.title.split('||').map((part, i) => (
-              <span key={i}>
-                {i > 0 && <>{' '}<br className="md:hidden" /></>}
-                {part}
-              </span>
-            ))}
-          </h2>
-        </motion.div>
-
-      </div>
-
-      {/* Un contenedor por servicio */}
       {t.services.items.map((item, i) => (
-        <ContainerTextScroll
-          key={i}
-          inputStart={i === 0 ? 0.3 : 0}
-          titleComponent={
-            <div className="flex flex-col items-center gap-5 mt-[190px] md:mt-[320px]">
-              {i === 0 && (
-                <span className="text-xs font-mono uppercase tracking-[0.25em] text-white/30">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-              )}
-              <h3 className="text-[clamp(24px,3vw,40px)] font-semibold text-white leading-tight">
-                {item.title}
-              </h3>
-              <p className="text-base md:text-2xl text-white font-normal max-w-2xl md:max-w-none leading-relaxed">
-                {item.desc.split('||').map((part, i) => (
-                  <span key={i}>
-                    {i > 0 && <br className="hidden md:block" />}
-                    {part}
-                  </span>
-                ))}
-              </p>
-            </div>
-          }
-        >
-          <img
-            src={SERVICE_IMAGES[i]}
-            alt={item.title}
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-        </ContainerTextScroll>
+        <VideoServiceContainer key={i} item={item} src={SERVICE_MEDIA[i].src} />
       ))}
     </section>
   )

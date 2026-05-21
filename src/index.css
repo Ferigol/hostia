@@ -54,6 +54,45 @@
   font-display: swap;
 }
 
+/* ─── Tomorrow Font Face ─── */
+@font-face {
+  font-family: 'Tomorrow';
+  src: url('../fonts/Tomorrow-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tomorrow';
+  src: url('../fonts/Tomorrow-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tomorrow';
+  src: url('../fonts/Tomorrow-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Tektur Font Face ─── */
+@font-face {
+  font-family: 'Tektur';
+  src: url('../fonts/Tektur-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Tektur';
+  src: url('../fonts/Tektur-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ─── CSS Variables ─── */
 :root {
   --orange: #f86943;
@@ -80,6 +119,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  scroll-padding-top: var(--nav-height);
 }
 
 body {
@@ -91,6 +131,7 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
 }
+
 
 /* ── Noise grain overlay — fixed over the entire page ── */
 body::after {
@@ -105,6 +146,15 @@ body::after {
   background-size: 180px 180px;
   background-repeat: repeat;
 }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: rgba(80, 15, 245, 0.4); border-radius: 3px; transition: background 0.2s ease; }
+::-webkit-scrollbar-thumb:hover { background: rgba(80, 15, 245, 0.4); }
+::-webkit-scrollbar-thumb:active { background: rgba(80, 15, 245, 0.85); }
+
+* { scrollbar-width: thin; scrollbar-color: rgba(80, 15, 245, 0.4) var(--black); }
 
 a { text-decoration: none; color: inherit; }
 button { border: none; cursor: pointer; font-family: inherit; background: none; }
@@ -168,6 +218,106 @@ img { display: block; max-width: 100%; }
 
 @media (max-width: 768px) {
   .section-inner { padding: 0 20px; }
+}
+
+/* ─── Flip Countdown ─── */
+.flip-countdown-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.flip-unit {
+  position: relative;
+  width: 80px;
+  height: 100px;
+  perspective: 400px;
+}
+
+.flip-card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+  background: var(--flip-card-bg, #ffffff);
+  backface-visibility: hidden;
+  user-select: none;
+}
+
+.flip-card__top {
+  top: 0;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.flip-card__bottom {
+  bottom: 0;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Digit spans full unit height, clipped by the parent half-card */
+.flip-digit {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 200%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Tomorrow', sans-serif;
+  font-weight: 500;
+  font-size: 56px;
+  color: var(--flip-card-text, #000000);
+}
+
+.flip-card__top .flip-digit,
+.flipper__top .flip-digit {
+  top: 0;
+}
+
+.flip-card__bottom .flip-digit,
+.flipper__bottom .flip-digit {
+  bottom: 0;
+}
+
+.flipper {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.flipper__top {
+  top: 0;
+  border-radius: 8px 8px 0 0;
+  transform-origin: bottom center;
+  transform: rotateX(0deg);
+}
+
+.flipper__bottom {
+  bottom: 0;
+  border-radius: 0 0 8px 8px;
+  transform-origin: top center;
+  transform: rotateX(90deg);
+}
+
+.is-flipping .flipper__top {
+  animation: flip-top 0.3s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+}
+
+.is-flipping .flipper__bottom {
+  animation: flip-bottom 0.3s cubic-bezier(0.45, 0, 0.55, 1) 0.3s forwards;
+}
+
+@keyframes flip-top {
+  from { transform: rotateX(0deg); }
+  to   { transform: rotateX(-90deg); }
+}
+
+@keyframes flip-bottom {
+  from { transform: rotateX(90deg); }
+  to   { transform: rotateX(0deg); }
 }
 
 /* ─── Word-by-word entrance animation ─── */

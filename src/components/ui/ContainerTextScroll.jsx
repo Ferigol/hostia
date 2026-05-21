@@ -1,48 +1,97 @@
 import { useRef, useState, useEffect } from 'react'
-import { useScroll, useTransform, useSpring, motion } from 'framer-motion'
+import { useMotionValue, useSpring, motion } from 'framer-motion'
 
-const SPRING = { stiffness: 80, damping: 22, mass: 0.8 }
+const SPRING         = { stiffness: 80, damping: 22, mass: 0.8 }
+const SPRING_SOFT    = { stiffness: 60, damping: 20, mass: 1.0 }
+const SPRING_OPACITY = { stiffness: 35, damping: 18, mass: 1.3 }
 
 const Card = ({ rotate, scale, children }) => (
   <motion.div
     style={{
       rotateX: rotate,
       scale,
-      boxShadow: '0 40px 80px rgba(0,0,0,0.7), 0 20px 40px rgba(0,0,0,0.4)',
+      boxShadow:
+        '0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003',
     }}
-    className="relative h-[24rem] md:h-[33rem] w-full border border-white/10 bg-[#0a0a0a] rounded-2xl overflow-hidden"
+    className="relative h-[24rem] md:h-[33rem] w-full border border-white/15 bg-[#111111] rounded-[30px] overflow-hidden"
   >
     {children}
   </motion.div>
 )
 
-export const ContainerTextScroll = ({ titleComponent, children, inputStart = 0 }) => {
+function getProgress(el) {
+  const rect  = el.getBoundingClientRect()
+  const vh    = window.innerHeight
+  const total = rect.height + vh
+  return Math.max(0, Math.min(1, (vh - rect.top) / total))
+}
+
+export const ContainerTextScroll = ({ titleComponent, children }) => {
   const containerRef = useRef(null)
-  const { scrollYProgress } = useScroll({ target: containerRef })
 
   const [isMobile, setIsMobile] = useState(false)
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
+    const check = () => setIsMobile(window.innerWidth <= 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
   }, [])
 
-  // inputStart retrasa el inicio de la animación de entrada (0 = inmediato, 0.3 = espera a estar más en vista)
-  const s = inputStart
-  const rotateRaw     = useTransform(scrollYProgress, [s, Math.min(s + 0.45, 1)], [-8, 0])
-  const scaleRaw      = useTransform(scrollYProgress, [s, Math.min(s + 0.45, 1)], isMobile ? [0.85, 1] : [0.93, 1])
-  const translateYRaw = useTransform(scrollYProgress, [s, Math.min(s + 0.45, 1)], [50, 0])
+  const rotateRaw      = useMotionValue(-20)
+  const scaleRaw       = useMotionValue(0.9)
+  const translateYRaw  = useMotionValue(100)
+  const textYRaw       = useMotionValue(100)
+  const textScaleRaw   = useMotionValue(0.8)
+  const opacityRaw     = useMotionValue(0)
 
-  const rotate     = useSpring(rotateRaw, SPRING)
-  const scale      = useSpring(scaleRaw, SPRING)
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    const update = () => {
+      const p     = getProgress(el)
+      const minSc = isMobile ? 0.8 : 0.9
+
+      // ── Opacidad: rango ampliado para que la disolución sea visible ──
+      let o
+      if      (p < 0.35) o = p / 0.35
+      else if (p < 0.75) o = 1
+      else               o = (1 - p) / 0.25
+      opacityRaw.set(Math.max(0, Math.min(1, o)))
+
+      // ── Tilt rotateX: -20° → 0° → -20° ──
+      let r
+      if      (p < 0.25) r = -20 + 20 * (p / 0.25)
+      else if (p < 0.75) r = 0
+      else               r = -20 * ((p - 0.75) / 0.25)
+      rotateRaw.set(r)
+
+      // ── Scale card ──
+      let s
+      if      (p < 0.25) s = minSc + (1 - minSc) * (p / 0.25)
+      else if (p < 0.75) s = 1
+      else               s = 1 - (1 - minSc) * ((p - 0.75) / 0.25)
+      scaleRaw.set(s)
+
+      // ── Slide vertical card ──
+      translateYRaw.set(p < 0.25 ? 100 - 100 * (p / 0.25) : 0)
+
+      // ── Slide + escala del texto ──
+      textYRaw.set(p < 0.25 ? 100 - 100 * (p / 0.25) : 0)
+      textScaleRaw.set(p < 0.25 ? 0.8 + 0.2 * (p / 0.25) : 1)
+    }
+
+    window.addEventListener('scroll', update, { passive: true })
+    update()
+    return () => window.removeEventListener('scroll', update)
+  }, [isMobile, opacityRaw, rotateRaw, scaleRaw, translateYRaw, textYRaw, textScaleRaw])
+
+  const rotate     = useSpring(rotateRaw,     SPRING)
+  const scale      = useSpring(scaleRaw,      SPRING)
   const translateY = useSpring(translateYRaw, SPRING)
-
-  // Opacity en el wrapper: todo el contenedor (card + textos) aparece junto
-  const opacityRaw = useTransform(scrollYProgress, [s, Math.min(s + 0.3, 1)], [0, 1])
-  const opacity    = useSpring(opacityRaw, { stiffness: 60, damping: 20 })
-
-  const textY = useTransform(scrollYProgress, [s, Math.min(s + 0.45, 1)], [30, 0])
+  const textY      = useSpring(textYRaw,      SPRING_SOFT)
+  const textScale  = useSpring(textScaleRaw,  SPRING_SOFT)
+  const opacity    = useSpring(opacityRaw,    SPRING_OPACITY)
 
   return (
     <div
@@ -50,19 +99,16 @@ export const ContainerTextScroll = ({ titleComponent, children, inputStart = 0 }
       className="h-[38rem] md:h-[49rem] flex items-center justify-center px-4 md:px-16"
       style={{ perspective: '1200px' }}
     >
-      {/* opacity aquí: card + imagen + textos aparecen y desaparecen juntos */}
       <motion.div style={{ translateY, opacity }} className="w-full max-w-5xl">
         <Card rotate={rotate} scale={scale}>
           <div className="absolute inset-0">
             {children}
           </div>
 
-          <div className="absolute inset-0 bg-black/0" />
-          <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black to-transparent" />
 
           <motion.div
-            style={{ translateY: textY }}
-            className="absolute inset-0 flex items-center justify-center text-center px-8 md:px-16"
+            style={{ translateY: textY, scale: textScale }}
+            className="absolute inset-0"
           >
             {titleComponent}
           </motion.div>

@@ -1,6 +1,7 @@
 .nosotros {
   background: var(--black);
   padding: 100px 0 120px;
+  margin-top: 50px;
   position: relative;
   overflow: hidden;
 }
@@ -54,6 +55,7 @@
 .nosotros__inner {
   position: relative;
   z-index: 1;
+  margin-top: 50px;
 }
 
 .nosotros__header {

@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+import { motion } from 'framer-motion'
 import './Footer.css'
 
 const NAV_LINKS = [
@@ -13,6 +15,16 @@ const SOCIAL_LINKS = [
 ]
 
 export default function Footer({ t, lang }) {
+  const stars = useMemo(() =>
+    Array.from({ length: 60 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top:  Math.random() * 100,
+      maxOpacity: Math.random() * 0.5 + 0.3,
+      duration:   Math.random() * 3 + 2,
+      delay:      Math.random() * 6,
+    }))
+  , [])
   const footerLinks = [
     {
       title: lang === 'en' ? 'Navigate' : 'Navegar',
@@ -25,16 +37,27 @@ export default function Footer({ t, lang }) {
   ]
 
   return (
-    <footer className="footer">
-      <div className="footer__inner">
+    <footer className="footer" style={{ position:'relative' }}>
+      <div style={{ position:'absolute', inset:0, zIndex:0, overflow:'hidden', pointerEvents:'none' }} aria-hidden="true">
+        {stars.map(s => (
+          <motion.div
+            key={s.id}
+            className="absolute bg-white rounded-full"
+            style={{ left:`${s.left}%`, top:`${s.top}%`, width:'2px', height:'2px' }}
+            animate={{ opacity: [0, s.maxOpacity, 0] }}
+            transition={{ duration: s.duration, repeat: Infinity, delay: s.delay, ease: 'easeInOut' }}
+          />
+        ))}
+      </div>
+      <div className="footer__inner" style={{ position:'relative', zIndex:1 }}>
         <div className="footer__grid">
           {/* Brand */}
           <div className="footer__brand">
             <img src="/logo-hostia-agency.svg" alt="hostia" className="footer__logo" />
             <p className="footer__brand-desc">
               {lang === 'en'
-                ? 'AI-powered digital marketing agency.'
-                : 'Agencia de marketing digital con IA.'}
+                ? <>Intelligence that builds.<br />Creativity that converts.</>
+                : <>Inteligencia que construye.<br />Creatividad que convierte.</>}
             </p>
             <a href="mailto:hola@hostia.agency" className="footer__email-link">
               <span className="footer__email-arrow">↗</span>
@@ -70,15 +93,8 @@ export default function Footer({ t, lang }) {
 
         {/* Bottom */}
         <div className="footer__bottom">
-          <div className="footer__socials">
-            {SOCIAL_LINKS.map(({ label, href }) => (
-              <a key={label} href={href} className="footer__social-icon">
-                {label}
-              </a>
-            ))}
-          </div>
           <p className="footer__copy">
-            &copy; {new Date().getFullYear()} hostia agency.{' '}
+            &copy; {new Date().getFullYear()} hostIA agency.{' '}
             {lang === 'en' ? 'All rights reserved.' : 'Todos los derechos reservados.'}
           </p>
         </div>

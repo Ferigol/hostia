@@ -4,71 +4,130 @@ export const LampContainer = () => (
   <div
     style={{
       position: "absolute",
-      inset: 0,
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
       pointerEvents: "none",
-      zIndex: 5,
-      mixBlendMode: "screen", // La luz se mezcla con fotos y textos como luz real
+      zIndex: 4,
+      overflow: "hidden",
+      mixBlendMode: "screen",
+      maskImage: "linear-gradient(to bottom, transparent 0px, black 80px)",
+      WebkitMaskImage: "linear-gradient(to bottom, transparent 0px, black 80px)",
     }}
   >
-    {/* Gran cono de luz descendente */}
-    <motion.div
-      initial={{ opacity: 0, scaleX: 0.1 }}
-      whileInView={{ opacity: 1, scaleX: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.2, duration: 1.0, ease: "easeOut" }}
-      style={{
-        position: "absolute",
-        top: "60px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        transformOrigin: "top center",
-        width: "120%",
-        height: "90%",
-        background:
-          "radial-gradient(ellipse 55% 70% at 50% 0%, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.14) 25%, rgba(255,255,255,0.05) 55%, transparent 80%)",
-      }}
-    />
+    <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", justifyContent: "center" }}>
 
-    {/* Barra horizontal brillante */}
-    <motion.div
-      initial={{ scaleX: 0, opacity: 0 }}
-      whileInView={{ scaleX: 1, opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.1, duration: 0.8, ease: "easeOut" }}
-      style={{
-        position: "absolute",
-        top: "60px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        transformOrigin: "center",
-        width: "65%",
-        maxWidth: "720px",
-        height: "1.5px",
-        background: "white",
-        borderRadius: "9999px",
-        boxShadow:
-          "0 0 12px 4px rgba(255,255,255,0.9), 0 0 40px 12px rgba(255,255,255,0.4), 0 0 80px 24px rgba(255,255,255,0.15)",
-      }}
-    />
+      {/* Left conic beam */}
+      <motion.div
+        initial={{ opacity: 0.5, width: "15rem" }}
+        whileInView={{ opacity: 1, width: "30rem" }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
+        style={{
+          position: "absolute",
+          top: "80px",
+          right: "50%",
+          height: "14rem",
+          overflow: "visible",
+          backgroundImage: "conic-gradient(from 70deg at center top, #500ff5, transparent, transparent)",
+        }}
+      >
+        <div style={{
+          position: "absolute", bottom: 0, left: 0,
+          width: "100%", height: "10rem", background: "#000",
+          maskImage: "linear-gradient(to top, white, transparent)",
+          WebkitMaskImage: "linear-gradient(to top, white, transparent)",
+        }} />
+        <div style={{
+          position: "absolute", bottom: 0, left: 0,
+          width: "10rem", height: "100%", background: "#000",
+          maskImage: "linear-gradient(to right, white, transparent)",
+          WebkitMaskImage: "linear-gradient(to right, white, transparent)",
+        }} />
+      </motion.div>
 
-    {/* Orbe suave bajo la barra */}
-    <motion.div
-      initial={{ opacity: 0, scale: 0.3 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.15, duration: 0.9, ease: "easeOut" }}
-      style={{
+      {/* Right conic beam */}
+      <motion.div
+        initial={{ opacity: 0.5, width: "15rem" }}
+        whileInView={{ opacity: 1, width: "30rem" }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
+        style={{
+          position: "absolute",
+          top: "80px",
+          left: "50%",
+          height: "14rem",
+          overflow: "visible",
+          backgroundImage: "conic-gradient(from 290deg at center top, transparent, transparent, #500ff5)",
+        }}
+      >
+        <div style={{
+          position: "absolute", bottom: 0, right: 0,
+          width: "10rem", height: "100%", background: "#000",
+          maskImage: "linear-gradient(to left, white, transparent)",
+          WebkitMaskImage: "linear-gradient(to left, white, transparent)",
+        }} />
+        <div style={{
+          position: "absolute", bottom: 0, right: 0,
+          width: "100%", height: "10rem", background: "#000",
+          maskImage: "linear-gradient(to top, white, transparent)",
+          WebkitMaskImage: "linear-gradient(to top, white, transparent)",
+        }} />
+      </motion.div>
+
+      {/* Wide glow orb */}
+      <div style={{
         position: "absolute",
-        top: "20px",
+        top: "80px",
         left: "50%",
-        transform: "translateX(-50%)",
-        width: "320px",
-        height: "90px",
+        transform: "translate(-50%, -50%)",
+        width: "28rem",
+        height: "9rem",
         borderRadius: "50%",
-        background:
-          "radial-gradient(ellipse at center, rgba(255,255,255,0.5) 0%, transparent 70%)",
-        filter: "blur(20px)",
-      }}
-    />
+        background: "#500ff5",
+        opacity: 0.5,
+        filter: "blur(3rem)",
+        zIndex: 5,
+      }} />
+
+      {/* Small bright orb near bar */}
+      <motion.div
+        initial={{ width: "8rem" }}
+        whileInView={{ width: "16rem" }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
+        style={{
+          position: "absolute",
+          top: "80px",
+          left: "50%",
+          transform: "translate(-50%, -6rem)",
+          height: "9rem",
+          borderRadius: "50%",
+          background: "#7c3aed",
+          filter: "blur(2rem)",
+          zIndex: 3,
+        }}
+      />
+
+      {/* Horizontal glowing bar */}
+      <motion.div
+        initial={{ width: "15rem" }}
+        whileInView={{ width: "30rem" }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
+        style={{
+          position: "absolute",
+          top: "80px",
+          left: "50%",
+          transform: "translate(-50%, -1px)",
+          height: "2px",
+          background: "#c4b5fd",
+          borderRadius: "9999px",
+          boxShadow: "0 0 12px 4px rgba(196,181,253,0.9), 0 0 40px 12px rgba(80,15,245,0.5), 0 0 80px 24px rgba(80,15,245,0.2)",
+          zIndex: 5,
+        }}
+      />
+    </div>
   </div>
 );

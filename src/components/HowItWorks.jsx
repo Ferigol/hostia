@@ -9,19 +9,6 @@ const SPRING_X       = { stiffness: 58, damping: 22, mass: 0.9 }
 const Step = ({ num, title, desc, align }) => {
   const ref = useRef(null)
 
-  /*
-   * Un único tracker para todo el ciclo de vida del paso:
-   * offset[0] = 'start 92%'  → el top del elemento entra por abajo
-   * offset[1] = 'start -10%' → el top sale por encima del navbar
-   * Rango total ≈ 102% de viewport → progreso 0 → 1
-   *
-   * Fases aproximadas (en % del viewport desde arriba):
-   *   0.00 → top en 92%  (fuera de vista, abajo)
-   *   0.13 → top en 79%  (completamente visible, zona de lectura)
-   *   0.50 → top en 41%  (mitad superior, empieza fade-out sutil)
-   *   0.88 → top en  2%  (cerca navbar, ya casi invisible)
-   *   1.00 → top en -10% (pasó el navbar, invisible)
-   */
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start 92%', 'start -10%'],
@@ -29,14 +16,12 @@ const Step = ({ num, title, desc, align }) => {
 
   const xDir = align === 'right' ? 75 : -75
 
-  // Opacidad: entra [0→0.13], se mantiene [0.13→0.50], desaparece [0.50→0.88]
   const opacityRaw = useTransform(
     scrollYProgress,
     [0, 0.13, 0.50, 0.88],
     [0,  1,    1,   0  ]
   )
 
-  // Posición lateral: entra desde el lado [0→0.17], se queda en 0 el resto
   const xRaw = useTransform(
     scrollYProgress,
     [0,    0.17, 1],
@@ -46,17 +31,16 @@ const Step = ({ num, title, desc, align }) => {
   const opacity = useSpring(opacityRaw, SPRING_OPACITY)
   const x       = useSpring(xRaw,       SPRING_X)
 
+  const content = align === 'left'
+    ? <><div className="how-step__content"><h3 className="how-step__title">{title.split('||').map((part, i) => <span key={i}>{i > 0 && <br />}{part}</span>)}</h3><p className="how-step__desc">{desc.split('||').map((part, i) => <span key={i}>{i > 0 && <br />}{part}</span>)}</p></div><span className="how-step__num">{num}</span></>
+    : <><span className="how-step__num">{num}</span><div className="how-step__content"><h3 className="how-step__title">{title.split('||').map((part, i) => <span key={i}>{i > 0 && <br />}{part}</span>)}</h3><p className="how-step__desc">{desc.split('||').map((part, i) => <span key={i}>{i > 0 && <br />}{part}</span>)}</p></div></>
+
   return (
-    <motion.div
-      ref={ref}
-      className={`how-step how-step--${align}`}
-      style={{ x, opacity }}
-    >
-      {align === 'left'
-        ? <><div className="how-step__content"><h3 className="how-step__title">{title}</h3><p className="how-step__desc">{desc.split('||').map((part, i) => <span key={i}>{i > 0 && <br />}{part}</span>)}</p></div><span className="how-step__num">{num}</span></>
-        : <><span className="how-step__num">{num}</span><div className="how-step__content"><h3 className="how-step__title">{title}</h3><p className="how-step__desc">{desc.split('||').map((part, i) => <span key={i}>{i > 0 && <br />}{part}</span>)}</p></div></>
-      }
-    </motion.div>
+    <div ref={ref} className={`how-step how-step--${align}`}>
+      <motion.div style={{ x, opacity, display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        {content}
+      </motion.div>
+    </div>
   )
 }
 

@@ -29,7 +29,6 @@ export default function CircularTestimonials({
   const fontSizeQuote    = fontSizes.quote          ?? '1.125rem'
 
   const [activeIndex, setActiveIndex]       = useState(0)
-  const [hoverPrev, setHoverPrev]           = useState(false)
   const [hoverNext, setHoverNext]           = useState(false)
   const [containerWidth, setContainerWidth] = useState(600)
   const [inView, setInView]                 = useState(false)
@@ -86,8 +85,15 @@ export default function CircularTestimonials({
     if (!autoplay || !inView) return
 
     autoplayRef.current = setInterval(() => {
-      clearInterval(autoplayRef.current)   // para primero
-      setActiveIndex(p => (p + 1) % len)   // luego cambia
+      setActiveIndex(p => {
+        if (p >= len - 1) {
+          clearInterval(autoplayRef.current)
+          return p
+        }
+        const next = p + 1
+        if (next >= len - 1) clearInterval(autoplayRef.current)
+        return next
+      })
     }, autoplayInterval)
 
     return () => { if (autoplayRef.current) clearInterval(autoplayRef.current) }
@@ -191,23 +197,28 @@ export default function CircularTestimonials({
           <div className="ct-arrows">
             <button
               className="ct-arrow"
-              onClick={handlePrev}
-              onMouseEnter={() => setHoverPrev(true)}
-              onMouseLeave={() => setHoverPrev(false)}
-              style={{ backgroundColor: hoverPrev ? colorArrowHover : colorArrowBg }}
-              aria-label="Anterior"
-            >
-              <ArrowLeft size={18} color={colorArrowFg} />
-            </button>
-            <button
-              className="ct-arrow"
               onClick={handleNext}
               onMouseEnter={() => setHoverNext(true)}
               onMouseLeave={() => setHoverNext(false)}
-              style={{ backgroundColor: hoverNext ? colorArrowHover : colorArrowBg }}
+              style={{
+                backgroundColor: hoverNext ? '#ffffff' : colorArrowBg,
+                boxShadow: hoverNext
+                  ? '-10px 0 32px 12px rgba(80, 16, 245, 0.65), 10px 0 32px 12px rgba(248, 105, 67, 0.65)'
+                  : '-8px 0 26px 8px rgba(80, 16, 245, 0.4), 8px 0 26px 8px rgba(248, 105, 67, 0.4)',
+              }}
               aria-label="Siguiente"
             >
-              <ArrowRight size={18} color={colorArrowFg} />
+              <motion.span
+                style={{ display: 'flex' }}
+                animate={hoverNext || activeIndex === len - 1 ? { x: 0 } : { x: [0, 5, 0] }}
+                transition={hoverNext || activeIndex === len - 1 ? {} : {
+                  duration: 1.6,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              >
+                <ArrowRight size={18} color={hoverNext ? '#000000' : colorArrowFg} />
+              </motion.span>
             </button>
           </div>
         </div>

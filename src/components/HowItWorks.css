@@ -110,10 +110,10 @@
 }
 
 .how-step__desc {
-  font-size: clamp(14px, 1.2vw, 16px);
-  font-weight: 300;
+  font-size: clamp(16px, 1.4vw, 22px);
+  font-weight: 400;
   color: var(--white);
-  line-height: 1.7;
+  line-height: 1.75;
   max-width: 420px;
   white-space: normal;
 }

@@ -18,10 +18,10 @@
 }
 
 .contact__sub {
-  font-size: clamp(14px, 1.3vw, 17px);
-  font-weight: 300;
+  font-size: clamp(16px, 1.4vw, 22px);
+  font-weight: 400;
   color: var(--white);
-  line-height: 1.4;
+  line-height: 1.75;
   white-space: nowrap;
   margin-bottom: 72px;
 }
@@ -40,7 +40,7 @@
 /* ── Field ── */
 .contact__field {
   position: relative;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
 }
 
 .contact__label {
@@ -56,36 +56,41 @@
 .contact__input {
   display: block;
   width: 100%;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.60);
-  border-radius: 10px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 0;
   outline: none;
   font-family: 'Gilroy', sans-serif;
   font-size: clamp(14px, 1.2vw, 16px);
   font-weight: 300;
   color: var(--white);
-  padding: 16px 20px;
+  padding: 14px 0;
   line-height: 1.5;
-  caret-color: var(--purple);
+  caret-color: var(--orange);
   resize: none;
-  transition: border-color 0.3s ease, background 0.3s ease;
+  transition: border-color 0.3s ease;
 }
 
 /* Altura fija compartida por inputs y trigger — textarea queda excluido */
 input.contact__input,
 .contact__dropdown-trigger {
-  height: 56px;
+  height: 52px;
   padding-top: 0;
   padding-bottom: 0;
 }
 
 .contact__input:focus {
-  border-color: rgba(255, 255, 255, 0.60);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.80);
 }
 
 .contact__input::placeholder {
-  color: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+  text-transform: uppercase;
+  font-family: 'Gilroy', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.04em;
 }
 
 .contact__textarea {
@@ -104,7 +109,12 @@ input.contact__input,
 }
 
 .contact__dropdown-placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--white);
+  text-transform: uppercase;
+  font-family: 'Gilroy', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.04em;
 }
 
 .contact__dropdown-chevron {
@@ -123,7 +133,7 @@ input.contact__input,
   left: 0;
   right: 0;
   background: #0a0a0a;
-  border: 1px solid rgba(255, 255, 255, 0.60);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 10px;
   overflow: hidden;
   z-index: 50;
@@ -139,19 +149,21 @@ input.contact__input,
   cursor: pointer;
   font-family: 'Gilroy', sans-serif;
   font-size: clamp(13px, 1.1vw, 15px);
-  font-weight: 300;
-  color: var(--white);
+  font-weight: 400;
+  color: #ffffff;
   text-align: left;
   transition: background 0.15s ease;
   gap: 16px;
 }
 
 .contact__dropdown-item:not(:last-child) {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: none;
 }
 
 .contact__dropdown-item:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.8);
+  color: #000000;
+  font-weight: 400;
 }
 
 .contact__dropdown-item--active {
@@ -163,20 +175,88 @@ input.contact__input,
 }
 
 .contact__dropdown-item-line {
-  flex: 1;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.25);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.contact__dropdown-item:hover .contact__dropdown-item-line,
-.contact__dropdown-item--active .contact__dropdown-item-line {
-  opacity: 1;
+  display: none;
 }
 
 /* hide the line span — no longer used */
 .contact__line { display: none; }
+
+/* ── Phone field with prefix ── */
+.contact__phone-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact__phone-row .contact__input { margin: 0; }
+
+/* Prefix dropdown wrapper — positioned for its panel */
+.contact__prefix-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Prefix trigger — fixed width, same look as service dropdown */
+.contact__prefix-trigger {
+  width: 148px;
+  white-space: nowrap;
+}
+
+/* Prefix panel — overrides to add search + scroll */
+.contact__prefix-panel {
+  top: 100%;
+  width: 280px;
+  max-height: 260px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #0a0a0a;
+}
+
+.contact__prefix-search {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.contact__prefix-search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0;
+  padding: 7px 4px;
+  font-family: 'Gilroy', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--white);
+  outline: none;
+  caret-color: var(--orange);
+}
+
+.contact__prefix-search-input::placeholder { color: rgba(255, 255, 255, 0.25); }
+
+.contact__prefix-list {
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(248, 105, 67, 0.4) transparent;
+}
+
+.contact__prefix-list::-webkit-scrollbar { width: 4px; }
+.contact__prefix-list::-webkit-scrollbar-track { background: transparent; }
+.contact__prefix-list::-webkit-scrollbar-thumb { background: rgba(248, 105, 67, 0.4); border-radius: 2px; }
+.contact__prefix-list::-webkit-scrollbar-thumb:active { background: rgba(248, 105, 67, 0.85); }
+
+/* Dial code label inside prefix items */
+.contact__prefix-item-dial {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--white-50);
+  flex-shrink: 0;
+}
 
 /* ── Footer row ── */
 .contact__footer-row {
@@ -226,7 +306,7 @@ input.contact__input,
 .contact__thanks {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
   padding: 48px 0;
 }
@@ -244,6 +324,303 @@ input.contact__input,
   font-weight: 300;
   color: var(--white-80);
   line-height: 1.6;
+}
+
+/* ── Two-column step row ── */
+.contact__step-row {
+  display: flex;
+  gap: 40px;
+}
+
+.contact__step-row .contact__field,
+.contact__step-row .contact__phone-field {
+  flex: 1;
+}
+
+/* ── Phone field with prefix ── */
+.contact__phone-field { padding-bottom: 40px; }
+
+.contact__phone-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--white);
+}
+
+.contact__prefix-wrap { position: relative; flex-shrink: 0; }
+
+.contact__prefix-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 14px 10px 14px 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'Gilroy', sans-serif;
+  font-size: clamp(14px, 1.2vw, 16px);
+  font-weight: 300;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.contact__prefix-code { font-size: clamp(13px, 1.1vw, 15px); color: var(--white); }
+.contact__prefix-dial { font-family: 'Gilroy', sans-serif; font-weight: 400; font-size: clamp(13px, 1.1vw, 15px); color: var(--white); }
+
+.contact__prefix-chevron { color: var(--white); transition: transform 0.25s ease; }
+.contact__prefix-chevron--open { transform: rotate(180deg); }
+
+.contact__phone-input {
+  flex: 1;
+  border-bottom: none !important;
+  padding-left: 4px;
+}
+
+.contact__prefix-panel {
+  top: 100%;
+  left: 0;
+  width: 280px;
+  max-height: 260px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #0a0a0a;
+}
+
+.contact__prefix-search {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.contact__prefix-search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0;
+  padding: 7px 4px;
+  font-family: 'Gilroy', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--white);
+  outline: none;
+  caret-color: var(--orange);
+}
+
+.contact__prefix-search-input::placeholder { color: rgba(255, 255, 255, 0.35); }
+
+.contact__prefix-list {
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(248, 105, 67, 0.4) transparent;
+}
+
+.contact__prefix-list::-webkit-scrollbar { width: 4px; }
+.contact__prefix-list::-webkit-scrollbar-track { background: transparent; }
+.contact__prefix-list::-webkit-scrollbar-thumb { background: rgba(248, 105, 67, 0.4); border-radius: 2px; }
+.contact__prefix-list::-webkit-scrollbar-thumb:active { background: rgba(248, 105, 67, 0.85); }
+
+/* ── Multistep form ── */
+.contact__multistep {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* Progress indicator */
+.contact__progress {
+  display: flex;
+  align-items: center;
+  margin-bottom: 52px;
+}
+
+.contact__progress-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+  transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  letter-spacing: 0;
+}
+
+.contact__progress-dot--active {
+  border-color: var(--orange);
+  color: var(--orange);
+  box-shadow: 0 0 18px rgba(248, 105, 67, 0.22);
+}
+
+.contact__progress-dot--done {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--black);
+}
+
+.contact__progress-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.10);
+  transition: background 0.4s ease;
+}
+
+.contact__progress-line--done {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* Step content */
+.contact__step {
+  min-height: 300px;
+}
+
+.contact__step-title {
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 36px;
+}
+
+/* Option pills */
+.contact__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.contact__options--column {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.contact__options--wrap {
+  flex-wrap: wrap;
+}
+
+.contact__option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.50);
+  font-family: 'Gilroy', sans-serif;
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 400;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.contact__option:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.contact__option--selected {
+  border-color: var(--orange);
+  background: rgba(248, 105, 67, 0.08);
+  color: var(--white);
+}
+
+/* Budget options — full width, rounded rect */
+.contact__options--column .contact__option {
+  border-radius: 10px;
+  padding: 14px 20px;
+  justify-content: space-between;
+  white-space: normal;
+}
+
+/* Nav buttons — mismo ancho */
+.contact__nav .btn {
+  min-width: 160px;
+  justify-content: center;
+}
+
+/* Navigation row */
+.contact__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -94px;
+  padding-top: 0;
+}
+
+.contact__nav--end {
+  justify-content: flex-end;
+}
+
+/* Back button — override btn-ghost to full white */
+.contact__nav .btn-ghost {
+  color: var(--white);
+  border-color: var(--white);
+}
+.contact__nav .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--white);
+  color: var(--white);
+}
+.contact__nav .btn-ghost:active {
+  background: var(--white);
+  color: var(--black);
+}
+
+/* Next button — outline blanco */
+.contact__btn-next {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--white);
+}
+.contact__btn-next:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-2px);
+}
+.contact__btn-next:active {
+  background: var(--white);
+  color: var(--black);
+  transform: translateY(0);
+}
+
+/* Disabled NEXT button */
+.btn:disabled {
+  opacity: 1;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Inline field error */
+.contact__error-msg {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  font-family: 'Gilroy', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #f86943;
+  letter-spacing: 0.03em;
+  pointer-events: none;
+}
+
+/* Blocked message inline (below budget dropdown) */
+.contact__blocked-msg {
+  margin-top: 20px;
+  font-size: clamp(14px, 1.3vw, 17px);
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--white-50);
 }
 
 /* ── Responsive ── */
@@ -266,4 +643,9 @@ input.contact__input,
   }
 
   .contact__submit { width: 100%; justify-content: center; }
+
+  .contact__progress-dot { width: 26px; height: 26px; font-size: 11px; }
+  .contact__step-title   { margin-bottom: 28px; }
+  .contact__options--column .contact__option { border-radius: 10px; }
+  .contact__nav .btn     { padding: 14px 22px; font-size: 14px; }
 }

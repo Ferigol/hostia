@@ -21,6 +21,8 @@ export default function Hero({ t }) {
   const line2Words  = lines[1] ? lines[1].split(' ').length : 0
   const PILLARS_START = LINE2_START + line2Words * STEP + 350
 
+  const SUBTITLE_START = LINE2_START + line2Words * STEP + 150
+
   const stars = useMemo(() =>
     Array.from({ length: 80 }, (_, i) => ({
       id: i,
@@ -65,10 +67,10 @@ export default function Hero({ t }) {
 
           {/* Images — absolutely positioned behind the title */}
           <div className="hero__img-left">
-            <DraggableImage src="/image-hero-1.webp" alt="Proyecto web 1" width={210} height={272} />
+            <DraggableImage src="/image-hero-1.webp" alt="Proyecto web 1" width={210} height={272} floatPhase={0} />
           </div>
           <div className="hero__img-right">
-            <DraggableImage src="/image-hero-2.webp" alt="Proyecto web 2" width={210} height={272} />
+            <DraggableImage src="/image-hero-2.webp" alt="Proyecto web 2" width={210} height={272} floatPhase={Math.PI} />
           </div>
 
           {/* Headline – word-by-word animation, in front of images */}
@@ -94,6 +96,32 @@ export default function Hero({ t }) {
               )
             })}
           </h1>
+
+          {/* Subtitle — dos líneas bajo el headline */}
+          <div className="hero__subtitle">
+            {t.hero.subtitle.map((line, i) => (
+              <p
+                key={i}
+                className="link-animate"
+                style={{ animationDelay: `${SUBTITLE_START + i * 180}ms` }}
+              >
+                {line}
+              </p>
+            ))}
+          </div>
+
+          {/* Scroll arrow — debajo del subtítulo */}
+          <div className="hero__scroll">
+            <a
+              href="#servicios"
+              className="hero__scroll-link"
+              aria-label="Ir a Servicios"
+              style={{ animationDelay: `${SUBTITLE_START + t.hero.subtitle.length * 180 + 600}ms` }}
+            >
+              <div className="hero__scroll-line" />
+              <div className="hero__scroll-head" />
+            </a>
+          </div>
 
           {/* Pillars — pie del hero */}
           <motion.div
