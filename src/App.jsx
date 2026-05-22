@@ -78,7 +78,7 @@ const T = {
         {
           name: '¡Ey, si a ti!',
           designation: 'Co-fundador & Director de Estrategia',
-          quote: 'El que llegó hasta acá ya sabe lo que||quiere. Cuéntame y me encargo.',
+          quote: 'El que llegó hasta acá sabe lo que||quiere. Cuéntame y me encargo.',
           src: '/nosotros-chico.webp',
         },
         {
