@@ -16,6 +16,7 @@
   margin: 0 40px;
   height: 22rem;
   perspective: 1000px;
+  overflow: hidden;
 }
 
 .ct-image {
