@@ -20,28 +20,28 @@ export const LampContainer = () => (
 
       {/* Left conic beam */}
       <motion.div
-        initial={{ opacity: 0.5, width: "15rem" }}
-        whileInView={{ opacity: 1, width: "30rem" }}
+        initial={{ opacity: 0.5, width: "12rem" }}
+        whileInView={{ opacity: 1, width: "24rem" }}
         viewport={{ once: true }}
         transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
         style={{
           position: "absolute",
           top: "80px",
           right: "50%",
-          height: "14rem",
+          height: "11rem",
           overflow: "visible",
           backgroundImage: "conic-gradient(from 70deg at center top, #500ff5, transparent, transparent)",
         }}
       >
         <div style={{
           position: "absolute", bottom: 0, left: 0,
-          width: "100%", height: "10rem", background: "#000",
+          width: "100%", height: "8rem", background: "#000",
           maskImage: "linear-gradient(to top, white, transparent)",
           WebkitMaskImage: "linear-gradient(to top, white, transparent)",
         }} />
         <div style={{
           position: "absolute", bottom: 0, left: 0,
-          width: "10rem", height: "100%", background: "#000",
+          width: "8rem", height: "100%", background: "#000",
           maskImage: "linear-gradient(to right, white, transparent)",
           WebkitMaskImage: "linear-gradient(to right, white, transparent)",
         }} />
@@ -49,28 +49,28 @@ export const LampContainer = () => (
 
       {/* Right conic beam */}
       <motion.div
-        initial={{ opacity: 0.5, width: "15rem" }}
-        whileInView={{ opacity: 1, width: "30rem" }}
+        initial={{ opacity: 0.5, width: "12rem" }}
+        whileInView={{ opacity: 1, width: "24rem" }}
         viewport={{ once: true }}
         transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
         style={{
           position: "absolute",
           top: "80px",
           left: "50%",
-          height: "14rem",
+          height: "11rem",
           overflow: "visible",
           backgroundImage: "conic-gradient(from 290deg at center top, transparent, transparent, #500ff5)",
         }}
       >
         <div style={{
           position: "absolute", bottom: 0, right: 0,
-          width: "10rem", height: "100%", background: "#000",
+          width: "8rem", height: "100%", background: "#000",
           maskImage: "linear-gradient(to left, white, transparent)",
           WebkitMaskImage: "linear-gradient(to left, white, transparent)",
         }} />
         <div style={{
           position: "absolute", bottom: 0, right: 0,
-          width: "100%", height: "10rem", background: "#000",
+          width: "100%", height: "8rem", background: "#000",
           maskImage: "linear-gradient(to top, white, transparent)",
           WebkitMaskImage: "linear-gradient(to top, white, transparent)",
         }} />
@@ -82,8 +82,8 @@ export const LampContainer = () => (
         top: "80px",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        width: "28rem",
-        height: "9rem",
+        width: "22rem",
+        height: "7rem",
         borderRadius: "50%",
         background: "#500ff5",
         opacity: 0.5,
@@ -93,16 +93,16 @@ export const LampContainer = () => (
 
       {/* Small bright orb near bar */}
       <motion.div
-        initial={{ width: "8rem" }}
-        whileInView={{ width: "16rem" }}
+        initial={{ width: "6rem" }}
+        whileInView={{ width: "13rem" }}
         viewport={{ once: true }}
         transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
         style={{
           position: "absolute",
           top: "80px",
           left: "50%",
-          transform: "translate(-50%, -6rem)",
-          height: "9rem",
+          transform: "translate(-50%, -5rem)",
+          height: "7rem",
           borderRadius: "50%",
           background: "#7c3aed",
           filter: "blur(2rem)",
@@ -112,8 +112,8 @@ export const LampContainer = () => (
 
       {/* Horizontal glowing bar */}
       <motion.div
-        initial={{ width: "15rem" }}
-        whileInView={{ width: "30rem" }}
+        initial={{ width: "12rem" }}
+        whileInView={{ width: "24rem" }}
         viewport={{ once: true }}
         transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
         style={{
