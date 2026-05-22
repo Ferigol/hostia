@@ -51,7 +51,7 @@ export default function Nosotros({ t }) {
             fontSizes={{
               name:        'clamp(24px, 3vw, 38px)',
               designation: '14px',
-              quote:       '22px',
+              quote:       'clamp(15px, 4vw, 22px)',
             }}
           />
         </div>
