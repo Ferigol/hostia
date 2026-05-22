@@ -70,6 +70,16 @@ export function FlipCountdown({
 
   return (
     <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'10px' }}>
+      <span style={{
+        fontFamily: 'Tomorrow, sans-serif',
+        fontWeight: 500,
+        fontSize: '13px',
+        letterSpacing: '0.45em',
+        color: '#ffffff',
+        textShadow: '0 0 10px rgba(255,255,255,0.9), 0 0 22px rgba(255,255,255,0.5)',
+      }}>
+        SOLO TIENES
+      </span>
       <div style={{ display:'flex', gap:'10px', alignItems:'center' }}>
         {digits.map((digit, i) => (
           <div key={i} style={{ display:'flex', alignItems:'center', gap:'10px' }}>
