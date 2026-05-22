@@ -77,6 +77,7 @@ export function FlipCountdown({
         letterSpacing: '0.45em',
         color: '#ffffff',
         textShadow: '0 0 10px rgba(255,255,255,0.9), 0 0 22px rgba(255,255,255,0.5)',
+        marginTop: '10px',
       }}>
         SOLO TIENES
       </span>
@@ -105,7 +106,7 @@ export function FlipCountdown({
         letterSpacing: '0.45em',
         color: '#ffffff',
         textShadow: '0 0 10px rgba(255,255,255,0.9), 0 0 22px rgba(255,255,255,0.5)',
-        marginTop: '0px',
+        marginTop: '-10px',
       }}>
         SEGUNDOS
       </span>
