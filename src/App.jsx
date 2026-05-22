@@ -68,7 +68,7 @@ const T = {
     },
     testimonials: {
       title: 'No tenemos testimonios.',
-      desc:  'Nuestros clientes nos piden resultados, no quieren pantalla.',
+      desc:  'Nuestros clientes nos piden resultados,||no quieren pantalla.',
       cta:   'Da el primer paso',
     },
     nosotros: {
@@ -216,7 +216,7 @@ const T = {
     },
     testimonials: {
       title: 'We have no testimonials.',
-      desc:  'Our clients ask for results, not screen time.',
+      desc:  'Our clients ask for results,||not screen time.',
       cta:   'Take the first step',
     },
     nosotros: {

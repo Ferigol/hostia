@@ -26,7 +26,11 @@ export default function Testimonials({ t }) {
       {/* Central content */}
       <div className="testi__content">
         <h2 className="testi__title">{t.testimonials.title}</h2>
-        <p  className="testi__desc">{t.testimonials.desc}</p>
+        <p className="testi__desc">
+          {t.testimonials.desc.split('||').map((line, i) => (
+            <span key={i}>{i > 0 && <br />}{line}</span>
+          ))}
+        </p>
       </div>
 
       {/* Rotating ring of avatars */}
