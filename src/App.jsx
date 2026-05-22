@@ -90,7 +90,7 @@ const T = {
         {
           name: 'Win siempre estuvo aquí.',
           designation: 'Agente Encubierto',
-          quote: 'Nos observa a todos. Y cuando alguien||llena el formulario, ronronea.',
+          quote: 'Nos observa a todos. Y ronronea||cuando alguien da el paso.',
           src: '/nosotros-gato.webp',
         },
       ],
