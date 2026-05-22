@@ -28,11 +28,11 @@ export default function Testimonials({ t }) {
   , [])
 
   const [orbitRadius, setOrbitRadius] = useState(() =>
-    typeof window !== 'undefined' && window.innerWidth <= 900 ? 165 : 300
+    typeof window !== 'undefined' && window.innerWidth <= 900 ? 190 : 300
   )
 
   useEffect(() => {
-    const handler = () => setOrbitRadius(window.innerWidth <= 900 ? 165 : 300)
+    const handler = () => setOrbitRadius(window.innerWidth <= 900 ? 190 : 300)
     window.addEventListener('resize', handler)
     return () => window.removeEventListener('resize', handler)
   }, [])
