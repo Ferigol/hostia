@@ -99,7 +99,7 @@
     order: 2;
     justify-content: center;
     padding-top: 1.5rem;
-    margin-top: 0;
+    margin-top: -50px;
   }
   .ct-content {
     order: 3;
