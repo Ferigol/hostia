@@ -193,34 +193,35 @@ export default function CircularTestimonials({
             </motion.div>
           </AnimatePresence>
 
-          {/* Arrows */}
-          <div className="ct-arrows">
-            <button
-              className="ct-arrow"
-              onClick={handleNext}
-              onMouseEnter={() => setHoverNext(true)}
-              onMouseLeave={() => setHoverNext(false)}
-              style={{
-                backgroundColor: hoverNext ? '#ffffff' : colorArrowBg,
-                boxShadow: hoverNext
-                  ? '-10px 0 32px 12px rgba(80, 16, 245, 0.65), 10px 0 32px 12px rgba(248, 105, 67, 0.65)'
-                  : '-8px 0 26px 8px rgba(80, 16, 245, 0.4), 8px 0 26px 8px rgba(248, 105, 67, 0.4)',
+        </div>
+
+        {/* Arrows — sibling del grid para poder reordenarlo en mobile */}
+        <div className="ct-arrows">
+          <button
+            className="ct-arrow"
+            onClick={handleNext}
+            onMouseEnter={() => setHoverNext(true)}
+            onMouseLeave={() => setHoverNext(false)}
+            style={{
+              backgroundColor: hoverNext ? '#ffffff' : colorArrowBg,
+              boxShadow: hoverNext
+                ? '-10px 0 32px 12px rgba(80, 16, 245, 0.65), 10px 0 32px 12px rgba(248, 105, 67, 0.65)'
+                : '-8px 0 26px 8px rgba(80, 16, 245, 0.4), 8px 0 26px 8px rgba(248, 105, 67, 0.4)',
+            }}
+            aria-label="Siguiente"
+          >
+            <motion.span
+              style={{ display: 'flex' }}
+              animate={hoverNext || activeIndex === len - 1 ? { x: 0 } : { x: [0, 5, 0] }}
+              transition={hoverNext || activeIndex === len - 1 ? {} : {
+                duration: 1.6,
+                repeat: Infinity,
+                ease: 'easeInOut',
               }}
-              aria-label="Siguiente"
             >
-              <motion.span
-                style={{ display: 'flex' }}
-                animate={hoverNext || activeIndex === len - 1 ? { x: 0 } : { x: [0, 5, 0] }}
-                transition={hoverNext || activeIndex === len - 1 ? {} : {
-                  duration: 1.6,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-              >
-                <ArrowRight size={18} color={hoverNext ? '#000000' : colorArrowFg} />
-              </motion.span>
-            </button>
-          </div>
+              <ArrowRight size={18} color={hoverNext ? '#000000' : colorArrowFg} />
+            </motion.span>
+          </button>
         </div>
 
       </div>
