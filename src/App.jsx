@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Services from './components/Services'
 import HowItWorks from './components/HowItWorks'
+import Testimonials from './components/Testimonials'
 import Nosotros from './components/Nosotros'
 import Footer from './components/Footer'
 import Contact from './components/Contact'
@@ -64,6 +65,11 @@ const T = {
           body:     'Contenido con IA, con tu voz y tu identidad. ||Imágenes y videos que paran, enganchan y convierten.',
         },
       ],
+    },
+    testimonials: {
+      title: 'No tenemos testimonios.',
+      desc:  'Nuestros clientes nos piden resultados, no quieren pantalla.',
+      cta:   'Da el primer paso',
     },
     nosotros: {
       label: 'Nosotros',
@@ -208,6 +214,11 @@ const T = {
         },
       ],
     },
+    testimonials: {
+      title: 'We have no testimonials.',
+      desc:  'Our clients ask for results, not screen time.',
+      cta:   'Take the first step',
+    },
     nosotros: {
       label: 'About us',
       title: 'The people behind||Hostia',
@@ -307,6 +318,7 @@ export default function App() {
         <Hero key={lang} t={t} />
         <Services t={t} />
         <HowItWorks t={t} />
+        <Testimonials t={t} />
         <Nosotros t={t} />
         <Contact t={t} />
       </main>
