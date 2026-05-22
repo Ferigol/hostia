@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import './Testimonials.css'
 
@@ -13,7 +13,6 @@ const AVATARS = [
   { src: '/Clientes-8.webp', alt: 'Cliente' },
 ]
 
-const ORBIT_RADIUS  = 300
 const ORBIT_DURATION = 50
 
 export default function Testimonials({ t }) {
@@ -27,6 +26,16 @@ export default function Testimonials({ t }) {
       delay:      Math.random() * 6,
     }))
   , [])
+
+  const [orbitRadius, setOrbitRadius] = useState(() =>
+    typeof window !== 'undefined' && window.innerWidth <= 900 ? 118 : 300
+  )
+
+  useEffect(() => {
+    const handler = () => setOrbitRadius(window.innerWidth <= 900 ? 118 : 300)
+    window.addEventListener('resize', handler)
+    return () => window.removeEventListener('resize', handler)
+  }, [])
 
   return (
     <section className="testi">
@@ -53,36 +62,37 @@ export default function Testimonials({ t }) {
         </p>
       </div>
 
-      {/* Rotating ring of avatars */}
-      <div
-        className="testi__orbit"
-        style={{ '--orbit-duration': `${ORBIT_DURATION}s` }}
-        aria-hidden="true"
-      >
-        {AVATARS.map((avatar, i) => {
-          const angle = (i / AVATARS.length) * 2 * Math.PI
-          const x = Math.cos(angle) * ORBIT_RADIUS
-          const y = Math.sin(angle) * ORBIT_RADIUS
-          return (
-            <div
-              key={i}
-              className="testi__avatar-anchor"
-              style={{ transform: `translate(${x}px, ${y}px)` }}
-            >
+      {/* Orbit container — absolute on desktop, relative block on mobile */}
+      <div className="testi__orbit-area" aria-hidden="true">
+        <div
+          className="testi__orbit"
+          style={{ '--orbit-duration': `${ORBIT_DURATION}s` }}
+        >
+          {AVATARS.map((avatar, i) => {
+            const angle = (i / AVATARS.length) * 2 * Math.PI
+            const x = Math.cos(angle) * orbitRadius
+            const y = Math.sin(angle) * orbitRadius
+            return (
               <div
-                className="testi__avatar-float"
-                style={{ animationDelay: `-${i * 0.75}s` }}
+                key={i}
+                className="testi__avatar-anchor"
+                style={{ transform: `translate(${x}px, ${y}px)` }}
               >
-                <img
-                  src={avatar.src}
-                  alt={avatar.alt}
-                  className="testi__avatar-img"
-                  style={{ '--orbit-duration': `${ORBIT_DURATION}s` }}
-                />
+                <div
+                  className="testi__avatar-float"
+                  style={{ animationDelay: `-${i * 0.75}s` }}
+                >
+                  <img
+                    src={avatar.src}
+                    alt={avatar.alt}
+                    className="testi__avatar-img"
+                    style={{ '--orbit-duration': `${ORBIT_DURATION}s` }}
+                  />
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
     </section>
   )

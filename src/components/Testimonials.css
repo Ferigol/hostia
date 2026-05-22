@@ -57,14 +57,21 @@
   max-width: 380px;
 }
 
-/* ── Orbit container (0×0, centered, rotates) ── */
+/* ── Orbit area — cubre la sección en desktop, bloque en mobile ── */
+.testi__orbit-area {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Orbit ring (0×0, centrado, gira) ── */
 .testi__orbit {
   position: absolute;
   left: 50%;
   top: 50%;
   width: 0;
   height: 0;
-  z-index: 1;
   animation: testi-orbit var(--orbit-duration, 50s) linear infinite;
 }
 
@@ -110,8 +117,26 @@
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
-  .testi__circle--sm { width: 380px; height: 380px; }
-  .testi__circle--lg { width: 530px; height: 530px; }
-  .testi__orbit      { display: none; }
-  .testi             { min-height: 50vh; }
+  .testi {
+    flex-direction: column;
+    min-height: auto;
+    padding: 80px 24px 60px;
+    gap: 0;
+    justify-content: flex-start;
+  }
+
+  .testi__content {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 0;
+  }
+
+  /* En mobile el orbit-area es un bloque con altura fija debajo del texto */
+  .testi__orbit-area {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 300px;
+    flex-shrink: 0;
+  }
 }
