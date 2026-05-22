@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+import { motion } from 'framer-motion'
 import './Testimonials.css'
 
 const AVATARS = [
@@ -15,8 +17,32 @@ const ORBIT_RADIUS  = 300
 const ORBIT_DURATION = 50
 
 export default function Testimonials({ t }) {
+  const stars = useMemo(() =>
+    Array.from({ length: 60 }, (_, i) => ({
+      id:         i,
+      left:       Math.random() * 100,
+      top:        Math.random() * 100,
+      maxOpacity: Math.random() * 0.5 + 0.3,
+      duration:   Math.random() * 3 + 2,
+      delay:      Math.random() * 6,
+    }))
+  , [])
+
   return (
     <section className="testi">
+      {/* Stars */}
+      <div style={{ position:'absolute', inset:0, zIndex:0, overflow:'hidden', pointerEvents:'none' }} aria-hidden="true">
+        {stars.map(s => (
+          <motion.div
+            key={s.id}
+            className="absolute bg-white rounded-full"
+            style={{ left:`${s.left}%`, top:`${s.top}%`, width:'2px', height:'2px' }}
+            animate={{ opacity: [0, s.maxOpacity, 0] }}
+            transition={{ duration: s.duration, repeat: Infinity, delay: s.delay, ease: 'easeInOut' }}
+          />
+        ))}
+      </div>
+
       {/* Central content */}
       <div className="testi__content">
         <h2 className="testi__title">{t.testimonials.title}</h2>
