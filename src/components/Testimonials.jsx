@@ -27,7 +27,6 @@ export default function Testimonials({ t }) {
       <div className="testi__content">
         <h2 className="testi__title">{t.testimonials.title}</h2>
         <p  className="testi__desc">{t.testimonials.desc}</p>
-        <a  href="#contacto" className="testi__cta">{t.testimonials.cta}</a>
       </div>
 
       {/* Rotating ring of avatars */}
