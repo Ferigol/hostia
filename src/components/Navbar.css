@@ -198,5 +198,5 @@
   .navbar__links { display: none; }
   .navbar__cta   { display: none; }
   .navbar__burger { display: flex; }
-  .navbar__inner { gap: 0; padding: 24px 40px 0; }
+  .navbar__inner { gap: 0; padding: 0 24px; align-items: center; }
 }
