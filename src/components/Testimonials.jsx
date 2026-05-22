@@ -17,12 +17,6 @@ const ORBIT_DURATION = 50
 export default function Testimonials({ t }) {
   return (
     <section className="testi">
-      {/* Concentric dashed circles */}
-      <div className="testi__circles" aria-hidden="true">
-        <div className="testi__circle testi__circle--sm" />
-        <div className="testi__circle testi__circle--lg" />
-      </div>
-
       {/* Central content */}
       <div className="testi__content">
         <h2 className="testi__title">{t.testimonials.title}</h2>
