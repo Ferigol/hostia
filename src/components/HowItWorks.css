@@ -80,6 +80,7 @@
 .how-step:last-child { margin-bottom: 0; }
 
 .how-step--left { padding-top: 100px; }
+.how-step--left .how-step__num-wrap { top: 100px; }
 
 /* ── Número centrado (desktop / tablet) ── */
 .how-step__num-wrap {
