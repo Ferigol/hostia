@@ -92,7 +92,7 @@ export function FlipCountdown({
         fontFamily: 'Tomorrow, sans-serif',
         fontWeight: 500,
         fontSize: '13px',
-        letterSpacing: '0.2em',
+        letterSpacing: '0.45em',
         color: '#ffffff',
         textShadow: '0 0 10px rgba(255,255,255,0.9), 0 0 22px rgba(255,255,255,0.5)',
         marginTop: '0px',
