@@ -1,14 +1,14 @@
 import './Testimonials.css'
 
 const AVATARS = [
-  { src: 'https://i.pravatar.cc/150?img=3',  alt: 'Cliente' },
-  { src: 'https://i.pravatar.cc/150?img=7',  alt: 'Cliente' },
-  { src: 'https://i.pravatar.cc/150?img=11', alt: 'Cliente' },
-  { src: 'https://i.pravatar.cc/150?img=16', alt: 'Cliente' },
-  { src: 'https://i.pravatar.cc/150?img=21', alt: 'Cliente' },
-  { src: 'https://i.pravatar.cc/150?img=26', alt: 'Cliente' },
-  { src: 'https://i.pravatar.cc/150?img=33', alt: 'Cliente' },
-  { src: 'https://i.pravatar.cc/150?img=40', alt: 'Cliente' },
+  { src: '/Clientes-1.webp', alt: 'Cliente' },
+  { src: '/Clientes-2.webp', alt: 'Cliente' },
+  { src: '/Clientes-3.webp', alt: 'Cliente' },
+  { src: '/Clientes-4.webp', alt: 'Cliente' },
+  { src: '/Clientes-5.webp', alt: 'Cliente' },
+  { src: '/Clientes-6.webp', alt: 'Cliente' },
+  { src: '/Clientes-7.webp', alt: 'Cliente' },
+  { src: '/Clientes-8.webp', alt: 'Cliente' },
 ]
 
 const ORBIT_RADIUS  = 300
