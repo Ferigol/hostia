@@ -26,6 +26,16 @@
   margin-bottom: 72px;
 }
 
+/* Salto de línea solo en mobile */
+.contact__sub-nl {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .contact__sub { white-space: normal; }
+  .contact__sub-nl { display: block; height: 0; }
+}
+
 /* ── Form ── */
 .contact__form {
   width: 100%;

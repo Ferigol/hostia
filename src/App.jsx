@@ -98,7 +98,7 @@ const T = {
     contact: {
       tag:      'Contacto',
       headline: 'Hablemos',
-      sub:      'Aún no lo tienes claro. Cuéntanos dónde estás y te decimos hacia dónde ir.',
+      sub:      'Aún no lo tienes claro. Cuéntanos||dónde estás y te decimos hacia dónde ir.',
       name:     'Nombre',
       email:    'Email',
       phone:    'Teléfono',

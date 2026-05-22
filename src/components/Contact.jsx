@@ -438,7 +438,11 @@ export default function Contact({ t }) {
 
         <motion.div className="contact__header" style={{ opacity, y }}>
           <h2 className="contact__headline">{ct.headline}</h2>
-          <p className="contact__sub">{ct.sub}</p>
+          <p className="contact__sub">
+            {ct.sub.split('||').map((part, i) => (
+              <span key={i}>{i > 0 && <span className="contact__sub-nl" />}{part}</span>
+            ))}
+          </p>
         </motion.div>
 
         {sent ? (
