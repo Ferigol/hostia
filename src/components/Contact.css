@@ -58,7 +58,7 @@
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  border-bottom: 0.75px solid rgba(255, 255, 255, 1);
   border-radius: 0;
   outline: none;
   font-family: 'Gilroy', sans-serif;
@@ -344,7 +344,7 @@ input.contact__input,
   display: flex;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid var(--white);
+  border-bottom: 0.75px solid var(--white);
 }
 
 .contact__prefix-wrap { position: relative; flex-shrink: 0; }

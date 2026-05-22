@@ -59,10 +59,6 @@ export default function Footer({ t, lang }) {
                 ? <>Intelligence that builds.<br />Creativity that converts.</>
                 : <>Inteligencia que construye.<br />Creatividad que convierte.</>}
             </p>
-            <a href="mailto:hola@hostia.agency" className="footer__email-link">
-              <span className="footer__email-arrow">↗</span>
-              <span className="footer__email-text">hola@hostia.agency</span>
-            </a>
           </div>
 
           {/* Link columns */}

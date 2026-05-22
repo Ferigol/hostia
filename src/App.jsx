@@ -103,11 +103,13 @@ const T = {
         { value: 'branding', label: 'Branding'      },
         { value: 'otros',    label: 'Otros'         },
       ],
-      message:  'Mensaje',
-      cta:      'Enviar',
-      thanks:   'Gracias, te contactaremos',
-      next:     'Siguiente',
-      back:     'Volver',
+      message:           'Mensaje',
+      cta:               'Enviar',
+      thanks:            'Gracias, te contactaremos',
+      submitError:       'Algo falló. Inténtalo de nuevo.',
+      next:              'Siguiente',
+      back:              'Volver',
+      searchPlaceholder: 'Buscar...',
       steps: [
         {
           title:         'Tú',
@@ -152,10 +154,10 @@ const T = {
 
   en: {
     nav: {
-      services:   'Descubre',
-      howItWorks: 'El método',
-      about:      'Tu sombra',
-      contact:    'Da el paso',
+      services:   'Discover',
+      howItWorks: 'The method',
+      about:      'Your shadow',
+      contact:    'Take the step',
     },
     hero: {
       headline: 'We knew it.||You let it pass.',
@@ -164,45 +166,45 @@ const T = {
         'And you\'re still not in the game.',
       ],
       pillars: [
-        { title: 'Landing Page', sub: 'convert sales'    },
-        { title: 'Websites',     sub: 'build brands'     },
-        { title: 'Branding',     sub: 'strategic'        },
+        { title: 'Landing Page',    sub: 'turn visitors into clients' },
+        { title: 'Branding',        sub: 'visual identity'            },
+        { title: 'Digital content', sub: 'we tell your story'         },
       ],
     },
     howItWorks: {
       steps: [
         {
-          title: 'We analyze your brand',
-          desc:  'We study your business and competition to build a personalized digital strategy.',
+          title: 'You\'ve been watching||from the outside.',
+          desc:  'You see others growing. Filling their calendars. Turning followers into clients. And you wonder what they know that you don\'t.',
         },
         {
-          title: 'We design your website',
-          desc:  'We craft a custom design optimized to attract visitors and generate direct connections.',
+          title: 'The answer wasn\'t effort.||It was a system.',
+          desc:  'You didn\'t lack effort. You lacked the right tool. AI doesn\'t replace what you do. It multiplies what you already are.',
         },
         {
-          title: 'You start getting clients',
-          desc:  'We launch your site, activate SEO and you start seeing results within the first weeks.',
+          title: 'You start getting clients.',
+          desc:  'And then you get it. It wasn\'t magic. ||It was strategy. It was AI. It was finally ||deciding your business deserves more.',
         },
       ],
     },
     services: {
       label:    'What we do',
-      title:    'Everything you need to grow with AI',
+      title:    'Everything you need||to grow with AI',
       items: [
         {
-          title:    'Landing',
-          subtitle: 'A visitor has 8 seconds of patience.',
-          body:     'You either convert them or lose them. Forever. We design the page that captures, convinces and closes. No friction. No excuses.',
+          title:    'Landing Page',
+          subtitle: 'A visitor has 8 seconds of patience',
+          body:     'You either convert them or lose them forever. We build the page||that captures, convinces and closes. No friction, no excuses.',
         },
         {
           title:    'Branding',
-          subtitle: 'They choose you before you open your mouth.',
-          body:     'Visual identity is not aesthetics. It is the silent weapon that makes them remember you and forget your competition. We build it to last.',
+          subtitle: 'First impressions are non-negotiable',
+          body:     'Visual identity is not aesthetics. It\'s the silent weapon ||that makes them remember you and forget your competition.',
         },
         {
           title:    'Digital content',
-          subtitle: 'Post every day. Without burning out.',
-          body:     'Images and videos created with AI, in your voice and identity. Content that stops the scroll, hooks and converts. Your brand active, consistent and unstoppable.',
+          subtitle: 'Post every day. Without burning out',
+          body:     'Content with AI, in your voice and your identity. ||Images and videos that stop the scroll, hook and convert.',
         },
       ],
     },
@@ -211,20 +213,20 @@ const T = {
       title: 'The people behind||Hostia',
       members: [
         {
-          name: 'Hey you!',
+          name: 'Hey, you!',
           designation: 'Co-founder & Strategy Director',
-          quote: 'I was waiting for you, and yes I can||help you with your digital content.',
+          quote: 'If you made it this far, you know||what you want. Tell me and I\'ll handle it.',
           src: '/nosotros-chico.webp',
         },
         {
-          name: 'Silence!',
+          name: 'Shh.',
           designation: 'Co-founder & Creative Director',
-          quote: 'This is just for you. Scroll down||and fill out the form.',
+          quote: 'This one\'s just for you. Fill the form||and let us do what we do.',
           src: '/nosotros-chica.webp',
         },
         {
-          name: 'Win has been here from the start.',
-          designation: 'Director of Records',
+          name: 'Win has always been here.',
+          designation: 'Undercover Agent',
           quote: 'Watches over us all. And when someone||fills out the form, he purrs.',
           src: '/nosotros-gato.webp',
         },
@@ -233,7 +235,7 @@ const T = {
     contact: {
       tag:      'Contact',
       headline: "Let's talk",
-      sub:      'Tell us about your project. We reply within 24 hours.',
+      sub:      "Not sure yet? Tell us where you are and we'll tell you where to go.",
       name:     'Name',
       email:    'Email',
       phone:    'Phone',
@@ -244,17 +246,19 @@ const T = {
         { value: 'branding', label: 'Branding'     },
         { value: 'otros',    label: 'Other'        },
       ],
-      message:  'Message',
-      cta:      'Send',
-      thanks:   'Thank you. We will be in touch soon.',
-      next:     'Next',
-      back:     'Back',
+      message:            'Message',
+      cta:                'Send',
+      thanks:             "Thank you, we'll be in touch.",
+      submitError:        'Something went wrong. Please try again.',
+      next:               'Next',
+      back:               'Back',
+      searchPlaceholder:  'Search...',
       steps: [
         {
           title:         'You',
           nameLabel:     'Name',
           emailLabel:    'Email',
-          whatsappLabel: 'Teléfono',
+          whatsappLabel: 'Phone',
         },
         {
           title:          'Your project',

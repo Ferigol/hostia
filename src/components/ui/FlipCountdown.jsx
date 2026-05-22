@@ -18,20 +18,10 @@ function FlipDigit({ value }) {
     <div style={{
       position: 'relative',
       display: 'inline-block',
-      overflow: 'hidden',
       width: '80px',
       height: '100px',
-      borderRadius: '14px',
-      border: 'none',
-      boxShadow: '0 0 18px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.05)',
       flexShrink: 0,
     }}>
-      {/* dark gradient bg */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        background: 'linear-gradient(to bottom, #1c1c28 0%, #0a0a0f 50%, #111118 100%)',
-      }} />
-
       {/* digit */}
       <div style={{
         position: 'absolute', inset: 0,
@@ -47,18 +37,6 @@ function FlipDigit({ value }) {
         {displayValue}
       </div>
 
-      {/* scan lines */}
-      <div style={{ position:'absolute', inset:0, pointerEvents:'none', opacity: 0.25 }}>
-        <div style={{ position:'absolute', top:'10px', left:'6px', right:'6px', height:'1px', background:'linear-gradient(to right, transparent, #ffffff, transparent)' }} />
-        <div style={{ position:'absolute', top:'50%', left:'6px', right:'6px', height:'1px', backgroundColor:'#4a4a5a', transform:'translateY(-50%)' }} />
-        <div style={{ position:'absolute', bottom:'10px', left:'6px', right:'6px', height:'1px', background:'linear-gradient(to right, transparent, #ffffff, transparent)' }} />
-      </div>
-
-      {/* corner dots */}
-      <div style={{ position:'absolute', top:'6px',  left:'6px',  width:'5px', height:'5px', borderRadius:'50%', backgroundColor:'#4a4a5a' }} />
-      <div style={{ position:'absolute', top:'6px',  right:'6px', width:'5px', height:'5px', borderRadius:'50%', backgroundColor:'#4a4a5a' }} />
-      <div style={{ position:'absolute', bottom:'6px', left:'6px',  width:'5px', height:'5px', borderRadius:'50%', backgroundColor:'#4a4a5a' }} />
-      <div style={{ position:'absolute', bottom:'6px', right:'6px', width:'5px', height:'5px', borderRadius:'50%', backgroundColor:'#4a4a5a' }} />
     </div>
   )
 }
@@ -94,7 +72,20 @@ export function FlipCountdown({
     <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'10px' }}>
       <div style={{ display:'flex', gap:'10px', alignItems:'center' }}>
         {digits.map((digit, i) => (
-          <FlipDigit key={i} value={digit} />
+          <div key={i} style={{ display:'flex', alignItems:'center', gap:'10px' }}>
+            {i > 0 && (
+              <div style={{
+                width: '1px',
+                height: '48px',
+                background: 'linear-gradient(to bottom, transparent, #ffffff 40%, #ffffff 60%, transparent)',
+                flexShrink: 0,
+                boxShadow: '0 0 8px 3px rgba(255,255,255,0.7), 0 0 18px 6px rgba(255,255,255,0.3)',
+                maskImage: 'linear-gradient(to bottom, transparent, white 35%, white 65%, transparent)',
+                WebkitMaskImage: 'linear-gradient(to bottom, transparent, white 35%, white 65%, transparent)',
+              }} />
+            )}
+            <FlipDigit value={digit} />
+          </div>
         ))}
       </div>
       <span style={{

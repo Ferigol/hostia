@@ -57,7 +57,7 @@ const slideVariants = {
 }
 
 /* ── Phone field with prefix ────────────────────────────────────────────────── */
-function PhoneField({ placeholder, prefix, onPrefixChange, onPrefixSelect, prefixSelected, value, onChange, error }) {
+function PhoneField({ placeholder, prefix, onPrefixChange, onPrefixSelect, prefixSelected, value, onChange, error, searchPlaceholder }) {
   const [open, setOpen]   = useState(false)
   const [search, setSearch] = useState('')
   const wrapRef   = useRef(null)
@@ -96,7 +96,7 @@ function PhoneField({ placeholder, prefix, onPrefixChange, onPrefixSelect, prefi
               >
                 <div className="contact__prefix-search">
                   <input ref={searchRef} type="text" value={search} onChange={e => setSearch(e.target.value)}
-                    className="contact__prefix-search-input" placeholder="Buscar..." />
+                    className="contact__prefix-search-input" placeholder={searchPlaceholder} />
                 </div>
                 <div className="contact__prefix-list">
                   {filtered.map(p => (
@@ -213,7 +213,9 @@ export default function Contact({ t }) {
   const sectionRef = useRef(null)
   const [step, setStep] = useState(1)
   const [dir,  setDir]  = useState(1)
-  const [sent, setSent] = useState(false)
+  const [sent, setSent]             = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
   const [countdownStarted, setCountdownStarted] = useState(false)
   const [prefixSelected, setPrefixSelected] = useState(false)
   const [errors, setErrors] = useState({})
@@ -287,6 +289,39 @@ export default function Contact({ t }) {
   const isBlocked = step === 3 && form.budget === '<500'
   const canSubmit = step === 3 && form.budget && form.budget !== '<500'
 
+  const handleSubmit = async () => {
+    if (!canSubmit || submitting) return
+    setSubmitting(true)
+    setSubmitError(false)
+    const prefix = PREFIXES.find(p => p.code === form.phonePrefix)
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key:  'e096a947-d950-47d7-ab8d-5348f0ac691f',
+          name:        form.name,
+          email:       form.email,
+          phone:       `${prefix?.dial ?? ''} ${form.whatsapp}`,
+          business:    form.businessDesc,
+          service:     form.service,
+          budget:      form.budget,
+          extra:       form.extra,
+        }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setSent(true)
+      } else {
+        setSubmitError(true)
+      }
+    } catch {
+      setSubmitError(true)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
   /* ── Step content ──────────────────────────────────────────────────────── */
   const renderStep = () => {
     switch (step) {
@@ -321,6 +356,7 @@ export default function Contact({ t }) {
               value={form.whatsapp}
               onChange={handleChange}
               error={errors.whatsapp}
+              searchPlaceholder={ct.searchPlaceholder}
             />
           </div>
         </div>
@@ -357,14 +393,14 @@ export default function Contact({ t }) {
             options={steps[2].budgetOptions}
           />
           {!isBlocked && (
-            <div className="contact__field" style={{ marginTop: '8px' }}>
+            <div className="contact__field" style={{ marginTop: '8px', paddingBottom: 0 }}>
               <textarea
                 name="extra"
                 className="contact__input contact__textarea"
                 placeholder={steps[2].extraLabel}
                 value={form.extra}
                 onChange={handleChange}
-                rows={3}
+                rows={1}
               />
             </div>
           )}
@@ -460,13 +496,34 @@ export default function Contact({ t }) {
                 <button
                   type="button"
                   className="btn contact__btn-next"
-                  onClick={() => setSent(true)}
-                  disabled={!canSubmit}
+                  onClick={handleSubmit}
+                  disabled={!canSubmit || submitting}
                 >
-                  {steps[2].cta}
+                  {submitting ? '...' : steps[2].cta}
                 </button>
               )}
             </div>
+
+            <AnimatePresence>
+              {submitError && (
+                <motion.p
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  style={{
+                    textAlign: 'center',
+                    marginTop: '16px',
+                    fontFamily: 'Gilroy, sans-serif',
+                    fontSize: '14px',
+                    fontWeight: 400,
+                    color: '#f86943',
+                  }}
+                >
+                  {ct.submitError}
+                </motion.p>
+              )}
+            </AnimatePresence>
           </div>
         )}
 
