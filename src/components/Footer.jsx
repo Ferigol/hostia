@@ -61,10 +61,9 @@ export default function Footer({ t, lang }) {
             </p>
           </div>
 
-          {/* Link columns */}
+          {/* Link columns — sin títulos */}
           {footerLinks.map(section => (
             <div key={section.title} className="footer__links-col">
-              <h4 className="footer__col-title">{section.title}</h4>
               <ul className="footer__links-list">
                 {section.links.map(link => (
                   <li key={link.label}>
@@ -79,8 +78,7 @@ export default function Footer({ t, lang }) {
           <div className="footer__contact-col">
             <h4 className="footer__col-title">Base</h4>
             <ul className="footer__links-list">
-              <li><span className="footer__link footer__link--location">Lima - Perú</span></li>
-              <li><span className="footer__link footer__link--location">Madrid - España</span></li>
+              <li><span className="footer__link footer__link--location">Lima — Madrid</span></li>
             </ul>
           </div>
         </div>

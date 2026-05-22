@@ -37,7 +37,7 @@ const Step = ({ num, title, desc, align }) => {
 
   return (
     <div ref={ref} className={`how-step how-step--${align}`}>
-      <motion.div style={{ x, opacity, display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <motion.div className="how-step__row" style={{ x, opacity, display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         {content}
       </motion.div>
     </div>

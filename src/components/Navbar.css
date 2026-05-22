@@ -156,6 +156,7 @@
   position: fixed;
   inset: var(--nav-height) 0 0 0;
   background: #000;
+  background-image: radial-gradient(ellipse 80% 40% at 50% 100%, rgba(80, 16, 245, 0.45) 0%, transparent 70%);
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;

@@ -129,8 +129,14 @@
     gap: 16px;
   }
 
-  /* El número del paso izquierdo sube por encima del título en móvil */
-  .how-step--left .how-step__num { order: -1; }
+  .how-step__row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px;
+  }
+
+  /* Número siempre por encima del título en móvil */
+  .how-step__num { order: -1; }
 
   .how-step__content { max-width: 100%; }
   .how-step__title   { white-space: normal; font-size: clamp(22px, 6vw, 32px); }
